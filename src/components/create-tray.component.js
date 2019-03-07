@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class CreateTray extends Component {
   constructor(props) {
@@ -64,6 +65,18 @@ export default class CreateTray extends Component {
     console.log(`Harvest Date: ${this.state.harvest_date}`);
     console.log(`Yield: ${this.state.yield}`);
 
+    var newTray = {
+      plant_species: this.state.plant_species,
+      grams_of_seed: this.state.grams_of_seed,
+      germ_date: this.state.germ_date,
+      light_date: this.state.light_date,
+      harvest_date: this.state.harvest_date,
+      yield: this.state.yield
+    };
+
+    axios.post('http://localhost:4000/trays/add', newTray)
+      .then(res => console.log(res.data));
+
     this.state = {
       plant_species: '',
       grams_of_seed: '',
@@ -121,7 +134,7 @@ export default class CreateTray extends Component {
           </div>
           <div className="form-group">
             <label>Yield (in Oz): </label>
-            <input  type="date"
+            <input  type="number"
                     className="form-control"
                     value={this.state.yield}
                     onChange={this.onChangeYield}
