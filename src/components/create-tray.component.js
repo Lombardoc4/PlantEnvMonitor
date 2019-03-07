@@ -18,7 +18,7 @@ export default class CreateTray extends Component {
         grams_of_seed: '',
         germ_date: '',
         light_date: '',
-        harvest_date: false,
+        harvest_date: '',
         yield: ''
       }
   }
@@ -74,17 +74,17 @@ export default class CreateTray extends Component {
       yield: this.state.yield
     };
 
-    axios.post('http://localhost:4000/trays/add', newTray)
+    axios.post('http://127.0.0.1:4000/trays/add', newTray)
       .then(res => console.log(res.data));
 
-    this.state = {
+    this.setState({
       plant_species: '',
       grams_of_seed: '',
       germ_date: '',
       light_date: '',
       harvest_date: '',
       yield: ''
-    }
+    })
   }
 
   render() {
@@ -109,24 +109,24 @@ export default class CreateTray extends Component {
                     />
           </div>
           <div className="form-group">
-            <label>Germination Date: </label>
-            <input  type="date"
+            <label>Germination Date (MM/DD/YY): </label>
+            <input  type="string"
                     className="form-control"
                     value={this.state.germ_date}
                     onChange={this.onChangeGermDate}
                     />
           </div>
           <div className="form-group">
-            <label>Light Date: </label>
-            <input  type="date"
+            <label>Light Date (MM/DD/YY): </label>
+            <input  type="string"
                     className="form-control"
                     value={this.state.light_date}
                     onChange={this.onChangeLightDate}
                     />
           </div>
           <div className="form-group">
-            <label>Harvest Date: </label>
-            <input  type="date"
+            <label>Harvest Date (MM/DD/YY): </label>
+            <input  type="string"
                     className="form-control"
                     value={this.state.harvest_date}
                     onChange={this.onChangeHarvestDate}

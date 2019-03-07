@@ -14,13 +14,16 @@ app.use(bodyParser.json());
 mongoose.connect('mongodb://Farmer1:farmer1@ds161335.mlab.com:61335/p-e-m', {useNewUrlParser: true});
 var connection = mongoose.connection;
 
+
 connection.once('open', function(){
   console.log("MongoDB database connection established, success!");
 });
 
+
 app.listen(PORT, function() {
   console.log("Server in year: " + PORT);
 });
+
 
 trayRoutes.route('/').get(function(req, res) {
     Tray.find(function(err, trays) {

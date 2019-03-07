@@ -9,13 +9,13 @@ let Tray = new Schema({
     type: Number
   },
   germ_date: {
-    type: Date
+    type: String
   },
   light_date: {
-    type: Date
+    type: String
   },
   harvest_date: {
-    type: Date
+    type: String
   },
   yield:{
     type: Number
