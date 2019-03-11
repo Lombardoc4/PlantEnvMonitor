@@ -5,8 +5,10 @@ var cors = require('cors');
 var mongoose = require('mongoose');
 var PORT = 4000;
 var trayRoutes = express.Router();
+var enviRoutes = express.Router();
 
-let Tray = require('./tray.model');
+let Tray = require('./models/tray.model');
+let Enviro = require('./models/env.model');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -79,3 +81,13 @@ trayRoutes.route('/update/:id').post(function(req, res) {
 });
 
 app.use('/trays', trayRoutes);
+
+enviRoutes.route('/').get(function(req, res) {
+    Envi.find(function(err, envi) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(envi);
+        }
+    });
+});

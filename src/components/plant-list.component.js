@@ -22,8 +22,8 @@ export default class PlantList extends Component {
 
   componentDidMount() {
     axios.get('http://localhost:4000/trays/')
-      .then(response => {
-        this.setState({ trays: response.data });
+      .then(res => {
+        this.setState({ trays: res.data });
       })
       .catch(function (error){
         console.log(error);

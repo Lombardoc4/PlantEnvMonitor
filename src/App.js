@@ -17,15 +17,14 @@ class App extends Component {
       <Router>
         <div className="container">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="./" target="_blank">
-              <img src={logo} width="30" height="30" alt="./" />
+            <a class="navbar-brand" target="_blank">
+            <Link to="/">
+              <img src={logo} width="30" height="30" alt="/" />
+            </Link>
             </a>
             <Link to="/" className="navbar-brand">Plant Environment Monitor</Link>
             <div className="collpase navbar-collapse">
               <ul className="navbar-nav mr-auto">
-                <li className="navbar-item">
-                  <Link to="/" className="nav-link">Plants</Link>
-                </li>
                 <li className="navbar-item">
                   <Link to="/create" className="nav-link">New Tray</Link>
                 </li>

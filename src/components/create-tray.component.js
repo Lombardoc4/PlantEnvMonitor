@@ -74,7 +74,7 @@ export default class CreateTray extends Component {
       yield: this.state.yield
     };
 
-    axios.post('http://127.0.0.1:4000/trays/add', newTray)
+    axios.post('http://localhost:4000/trays/add', newTray)
       .then(res => console.log(res.data));
 
     this.setState({
