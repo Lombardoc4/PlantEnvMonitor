@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import Welcome from"./components/welcome.component";
 import PlantList from "./components/plant-list.component";
 import EditPlant from "./components/edit-plant.component";
 import CreateTray from "./components/create-tray.component";
@@ -13,6 +14,7 @@ import logo from "./logo.JPG";
 
 class App extends Component {
   render() {
+
     return (
       <Router>
         <div className="container">
@@ -35,7 +37,8 @@ class App extends Component {
             </div>
           </nav>
           <br/>
-          <Route path="/" exact component={PlantList} />
+          <Route path="/" exact component={Welcome} />
+          <Route path="/plants" component={PlantList} />
           <Route path="/edit/:id" component={EditPlant} />
           <Route path="/monitor" component = {EnvData} />
           <Route path="/create" component={CreateTray} />

@@ -27,7 +27,7 @@ app.listen(PORT, function() {
 });
 
 
-trayRoutes.route('/').get(function(req, res) {
+trayRoutes.route('/plants').get(function(req, res) {
     Tray.find(function(err, trays) {
         if (err) {
             console.log(err);
