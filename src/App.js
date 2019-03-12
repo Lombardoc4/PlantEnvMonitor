@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'react-image-lightbox/style.css';
 
 import Welcome from"./components/welcome.component";
 import PlantList from "./components/plant-list.component";
@@ -27,6 +28,9 @@ class App extends Component {
             <Link to="/" className="navbar-brand">Plant Environment Monitor</Link>
             <div className="collpase navbar-collapse">
               <ul className="navbar-nav mr-auto">
+              <li className="navbar-item">
+                <Link to="/plants" className="nav-link">All Trays</Link>
+              </li>
                 <li className="navbar-item">
                   <Link to="/create" className="nav-link">New Tray</Link>
                 </li>

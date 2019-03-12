@@ -2,19 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-var Tray = props => (
-  <tr>
-    <td>{props.tray.plant_species}</td>
-    <td>{props.tray.grams_of_seed}</td>
-    <td>{props.tray.germ_date}</td>
-    <td>{props.tray.light_date}</td>
-    <td>{props.tray.harvest_date}</td>
-    <td>{props.tray.yield}</td>
-    <td><Link to={"/edit/" + props.tray._id}>Edit</Link></td>
-  </tr>
-)
-
 export default class PlantList extends Component {
+
   constructor(props) {
     super(props);
       this.state = {trays: []};
@@ -30,11 +19,31 @@ export default class PlantList extends Component {
       });
   }
 
+  handleDelete= () => {
+    axios.post('http://localhost/trays/remove'+this.props.match.params.id)
+      .then(res => console.log(res.data));
+  };
+
   plant_List() {
-    return this.state.trays.map(function(currentTray, i){
-      return <Tray tray={currentTray} key={i} />;
-    });
+    return this.state.trays.map(tray => (<Tray tray={tray} key={tray._id} handleDelete={this.handleDelete} />;
+    ));
   }
+
+  var Tray = ({handleDelete}) => (
+    <tr>
+      <td>{props.tray.plant_species}</td>
+      <td>{props.tray.grams_of_seed}</td>
+      <td>{props.tray.germ_date}</td>
+      <td>{props.tray.light_date}</td>
+      <td>{props.tray.harvest_date}</td>
+      <td>{props.tray.yield}</td>
+      <td>{props.tray.plant_species}</td>
+      <td><Link to={"/edit/" + props.tray._id}>Edit></Link></td>
+      <td><button onClick={handleDelete}>Remove</button></td>
+
+
+  )
+
 
   render() {
     return (
@@ -49,6 +58,8 @@ export default class PlantList extends Component {
               <th>Light Date</th>
               <th>Harvest Date</th>
               <th>Yield</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>

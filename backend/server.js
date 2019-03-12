@@ -27,7 +27,7 @@ app.listen(PORT, function() {
 });
 
 
-trayRoutes.route('/plants').get(function(req, res) {
+trayRoutes.get('/', function(req, res) {
     Tray.find(function(err, trays) {
         if (err) {
             console.log(err);
@@ -37,7 +37,7 @@ trayRoutes.route('/plants').get(function(req, res) {
     });
 });
 
-trayRoutes.route('/:id').get(function(req, res) {
+trayRoutes.get('/:id', function(req, res) {
     let id = req.params.id;
     Tray.findById(id, function(err, tray) {
       if (err) {
@@ -48,7 +48,7 @@ trayRoutes.route('/:id').get(function(req, res) {
     });
 });
 
-trayRoutes.route('/add').post(function(req, res) {
+trayRoutes.post('/add', function(req, res) {
     let tray = new Tray(req.body);
     tray.save()
       .then(tray => {
@@ -59,7 +59,23 @@ trayRoutes.route('/add').post(function(req, res) {
       });
 });
 
-trayRoutes.route('/update/:id').post(function(req, res) {
+trayRoutes.delete('/remove/:id', function(req, res) {
+  Tray.findById(req.params.id, function(err, tray) {
+    if (err) {
+      res.status(404).send("Tray not found");
+    }
+    else {
+      tray.remove().then(tray => {
+          res.json('tray removed');
+          res.redirect('/');
+        })
+    }
+    // res.flash("success", "Tray has been deleted.")
+    // return res.redirect("/");
+  });
+});
+
+trayRoutes.post('/update/:id', function(req, res) {
     Tray.findById(req.params.id, function(err, tray) {
       if (!tray)
         res.status(404).send("tray is not found");
@@ -82,7 +98,7 @@ trayRoutes.route('/update/:id').post(function(req, res) {
 
 app.use('/trays', trayRoutes);
 
-enviRoutes.route('/').get(function(req, res) {
+enviRoutes.get('/', function(req, res) {
     Envi.find(function(err, envi) {
         if (err) {
             console.log(err);
@@ -91,3 +107,5 @@ enviRoutes.route('/').get(function(req, res) {
         }
     });
 });
+
+app.use('/envi', enviRoutes);
