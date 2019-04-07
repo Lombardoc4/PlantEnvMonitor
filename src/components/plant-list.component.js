@@ -5,6 +5,7 @@ import axios from 'axios';
 import CreateTray from "./create-tray.component";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const Server = "http://192.168.1.12:1337/";
 
 var Tray = props => (
   <tr>
@@ -28,7 +29,8 @@ export default class PlantList extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:1337/trays/')
+    var serverLocation = Server + 'trays/';
+    axios.get(serverLocation)
       .then(res => {
         this.setState({ trays: res.data });
       })

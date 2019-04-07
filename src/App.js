@@ -20,7 +20,7 @@ class App extends Component {
       <Router>
         <div className="container">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" target="_blank">
+            <a className="navbar-brand" target="_blank">
             <Link to="/">
               <img src={logo} width="30" height="30" alt="/" />
             </Link>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 import '../../node_modules/react-vis/dist/style.css';
 import {XYPlot,
         VerticalBarSeries,
@@ -10,6 +11,9 @@ import {XYPlot,
         YAxis,
         XAxis
       } from 'react-vis';
+
+
+const Server = "http://192.168.1.12:1337/";
 
 export default class EnvData extends Component {
     render() {

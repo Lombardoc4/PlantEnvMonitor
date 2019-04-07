@@ -3,7 +3,12 @@ var app = express();
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var mongoose = require('mongoose');
+var helmet = require('helmet');
+var morgan = require('morgan');
+
 var PORT = 1337;
+var testLogin = [];
+
 var trayRoutes = express.Router();
 var enviRoutes = express.Router();
 
@@ -11,6 +16,8 @@ let Tray = require('./models/tray.model');
 let Enviro = require('./models/env.model');
 
 app.use(cors());
+app.use(helmet());
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 
 mongoose.connect('mongodb://Farmer1:farmer1@ds161335.mlab.com:61335/p-e-m', {useNewUrlParser: true});
@@ -21,17 +28,11 @@ connection.once('open', function(){
   console.log("MongoDB database connection established, success!");
 });
 
-
-app.listen(PORT, '192.168.1.12', function() {
+app.listen(PORT, function() {
   console.log("Server in year: " + PORT);
 });
 
-app.all('*', function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
+
 
 trayRoutes.get('/', function(req, res) {
     Tray.find(function(err, trays) {

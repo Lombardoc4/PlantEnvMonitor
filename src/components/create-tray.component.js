@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
+const Server = "http://192.168.1.12:1337/";
+
 export default class CreateTray extends Component {
   constructor(props) {
     super(props);
@@ -73,8 +76,8 @@ export default class CreateTray extends Component {
       harvest_date: this.state.harvest_date,
       yield: this.state.yield
     };
-
-    axios.post('http://localhost:4000/trays/add', newTray)
+    var serverLocation = Server + 'trays/add';
+    axios.post(serverLocation, newTray)
       .then(res => console.log(res.data));
 
     this.setState({

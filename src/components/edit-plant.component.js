@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
+const Server = "http://192.168.1.12:1337/";
+
 export default class EditPlant extends Component {
 
     constructor(props) {
@@ -24,7 +27,8 @@ export default class EditPlant extends Component {
         }
     }
     componentDidMount() {
-      axios.get('http://localhost:4000/trays/' + this.props.match.params.id)
+      var serverLocation = Server + 'trays/' + this.props.match.params.id;
+      axios.get(serverLocation)
       .then(res => {
         this.setState({
           plant_species: res.data.plant_species,
@@ -83,7 +87,9 @@ export default class EditPlant extends Component {
         yield: this.state.yield
       };
       console.log(newTray);
-      axios.post('http://localhost/trays/update'+this.props.match.params.id, newTray)
+
+      var serverLocation = Server + 'trays/update'+this.props.match.params.id;
+      axios.post(serverLocation, newTray)
         .then(res => console.log(res.data));
 
       this.props.history.push('/');
