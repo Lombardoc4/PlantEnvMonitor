@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'react-image-lightbox/style.css';
+
+
 
 import Welcome from"./components/welcome.component";
 import PlantList from "./components/plant-list.component";
 import EditPlant from "./components/edit-plant.component";
-import CreateTray from "./components/create-tray.component";
 import EnvData from "./components/environment.component";
 
 import logo from "./logo.JPG";
@@ -32,9 +32,6 @@ class App extends Component {
                 <Link to="/plants" className="nav-link">All Trays</Link>
               </li>
                 <li className="navbar-item">
-                  <Link to="/create" className="nav-link">New Tray</Link>
-                </li>
-                <li className="navbar-item">
                   <Link to="/monitor" className="nav-link">Environment Data</Link>
                 </li>
               </ul>
@@ -45,7 +42,6 @@ class App extends Component {
           <Route path="/plants" component={PlantList} />
           <Route path="/edit/:id" component={EditPlant} />
           <Route path="/monitor" component = {EnvData} />
-          <Route path="/create" component={CreateTray} />
         </div>
       </Router>
     );

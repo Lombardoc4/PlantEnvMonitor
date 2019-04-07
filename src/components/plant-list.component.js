@@ -1,6 +1,24 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
+
+import CreateTray from "./create-tray.component";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+
+var Tray = props => (
+  <tr>
+    <td>{props.tray.plant_species}</td>
+    <td>{props.tray.grams_of_seed}</td>
+    <td>{props.tray.germ_date}</td>
+    <td>{props.tray.light_date}</td>
+    <td>{props.tray.harvest_date}</td>
+    <td>{props.tray.yield}</td>
+    <td>{props.tray.plant_species}</td>
+    <td><Link to={"/edit/" + props.tray._id}>Edit</Link></td>
+    <td></td>
+  </tr>
+)
 
 export default class PlantList extends Component {
 
@@ -10,7 +28,7 @@ export default class PlantList extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/trays/')
+    axios.get('http://localhost:1337/trays/')
       .then(res => {
         this.setState({ trays: res.data });
       })
@@ -19,36 +37,23 @@ export default class PlantList extends Component {
       });
   }
 
-  handleDelete= () => {
-    axios.post('http://localhost/trays/remove'+this.props.match.params.id)
-      .then(res => console.log(res.data));
-  };
+  // handleDelete= () => {
+  //   axios.post('http://localhost/trays/remove'+this.props.match.params.id)
+  //     .then(res => console.log(res.data));
+  // };
 
   plant_List() {
-    return this.state.trays.map(tray => (<Tray tray={tray} key={tray._id} handleDelete={this.handleDelete} />;
-    ));
+    return this.state.trays.map(function(currentTray, tray) {
+      return <Tray tray={currentTray} key={tray._id} />
+    })
   }
-
-  var Tray = ({handleDelete}) => (
-    <tr>
-      <td>{props.tray.plant_species}</td>
-      <td>{props.tray.grams_of_seed}</td>
-      <td>{props.tray.germ_date}</td>
-      <td>{props.tray.light_date}</td>
-      <td>{props.tray.harvest_date}</td>
-      <td>{props.tray.yield}</td>
-      <td>{props.tray.plant_species}</td>
-      <td><Link to={"/edit/" + props.tray._id}>Edit></Link></td>
-      <td><button onClick={handleDelete}>Remove</button></td>
-
-
-  )
-
 
   render() {
     return (
+    <Router>
       <div>
-        <h3>Plant List</h3>
+        <h3 >Plant List</h3>
+        <Link to="/create">New Tray</Link>
         <table className="table table-striped" style={{ marginTop: 20 }} >
           <thead>
             <tr>
@@ -59,14 +64,17 @@ export default class PlantList extends Component {
               <th>Harvest Date</th>
               <th>Yield</th>
               <th></th>
-              <th></th>
+              <th><button>Remove</button></th>
             </tr>
           </thead>
           <tbody>
             { this.plant_List() }
           </tbody>
         </table>
+        <br/>
+        <Route path="/create" component = {CreateTray} />
       </div>
+      </Router>
     )
   }
 }

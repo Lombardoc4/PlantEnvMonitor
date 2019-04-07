@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var mongoose = require('mongoose');
-var PORT = 4000;
+var PORT = 1337;
 var trayRoutes = express.Router();
 var enviRoutes = express.Router();
 
@@ -22,10 +22,16 @@ connection.once('open', function(){
 });
 
 
-app.listen(PORT, function() {
+app.listen(PORT, '192.168.1.12', function() {
   console.log("Server in year: " + PORT);
 });
 
+app.all('*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 
 trayRoutes.get('/', function(req, res) {
     Tray.find(function(err, trays) {

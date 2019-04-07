@@ -98,6 +98,7 @@ export default class CreateTray extends Component {
                     className="form-control"
                     value={this.state.plant_species}
                     onChange={this.onChangePlantSpecies}
+                    required
                     />
           </div>
           <div className="form-group">
@@ -106,6 +107,7 @@ export default class CreateTray extends Component {
                     className="form-control"
                     value={this.state.grams_of_seed}
                     onChange={this.onChangeGramsOfSeed}
+                    required
                     />
           </div>
           <div className="form-group">
@@ -114,6 +116,7 @@ export default class CreateTray extends Component {
                     className="form-control"
                     value={this.state.germ_date}
                     onChange={this.onChangeGermDate}
+                    required
                     />
           </div>
           <div className="form-group">
