@@ -3,11 +3,11 @@ var Schema = mongoose.Schema;
 
 let Envi = new Schema({
   time : {
-    type: Date
+    type: String
   },
-  humidity: {
-    type: Number
-  },
+  // humidity: {
+  //   type: Number
+  // },
   temperature: {
     type: Number
   }

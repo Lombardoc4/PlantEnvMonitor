@@ -5,7 +5,7 @@ import axios from 'axios';
 import CreateTray from "./create-tray.component";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Server = "http://192.168.1.12:1337/";
+const Server = "http://192.168.1.165:1337/";
 
 var Tray = props => (
   <tr>
@@ -22,7 +22,6 @@ var Tray = props => (
 )
 
 export default class PlantList extends Component {
-
   constructor(props) {
     super(props);
       this.state = {trays: []};

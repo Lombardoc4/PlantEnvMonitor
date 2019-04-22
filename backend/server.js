@@ -33,7 +33,6 @@ app.listen(PORT, function() {
 });
 
 
-
 trayRoutes.get('/', function(req, res) {
     Tray.find(function(err, trays) {
         if (err) {
@@ -106,13 +105,25 @@ trayRoutes.post('/update/:id', function(req, res) {
 app.use('/trays', trayRoutes);
 
 enviRoutes.get('/', function(req, res) {
-    Envi.find(function(err, envi) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(envi);
-        }
-    });
+  Enviro.find(function(err, envis) {
+      if (err) {
+          console.log(err);
+      } else {
+          res.json(envis);
+      }
+  });
+});
+
+enviRoutes.post('/', function(req, res) {
+    let envi = new Enviro(req.body);
+    console.log(req.body);
+    envi.save()
+      .then(envi => {
+        res.status(200).send('new datapoint added');
+      })
+      .catch(err => {
+        res.status(400).send('adding new data failed');
+      });
 });
 
 app.use('/envi', enviRoutes);
