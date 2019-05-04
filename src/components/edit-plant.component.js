@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 
-const Server = "http://192.168.1.12:1337/";
+const Server = "http://10.17.84.23:1337/";
 
 export default class EditPlant extends Component {
 

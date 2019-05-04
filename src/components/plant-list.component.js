@@ -5,7 +5,7 @@ import axios from 'axios';
 import CreateTray from "./create-tray.component";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Server = "http://192.168.1.165:1337/";
+const Server = "http://10.17.84.23:1337/";
 
 var Tray = props => (
   <tr>

@@ -15,7 +15,7 @@ import {XYPlot,
       } from 'react-vis';
 
 
-const Server = "http://192.168.1.165:1337/";
+const Server = "http://10.17.84.23:1337/";
 
 export default class EnvData extends Component {
   constructor(props) {
@@ -37,7 +37,8 @@ export default class EnvData extends Component {
     render() {
 
         const data = this.state.envis.map((envi)=> {
-          var xTime = Date.parse(envi.time);
+          var xTime = new Date(envi.time);
+          // xTime = Date.parse(xTime);
           console.log(xTime);
           return {x: Date.parse(envi.time), y: envi.temperature}
         });
