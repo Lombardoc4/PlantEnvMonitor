@@ -6,16 +6,12 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 
-import CreateTray from "./create-tray.component";
-// import "bootstrap/dist/css/bootstrap.min.css";
 
-const Server = "http://10.17.84.23:1337/";
+const Server = "http://192.168.1.165:1337/";
 
-var Plant = props => {
-
-  (
+var Plant = props => (
   <tr>
-    <td>{props.plant.plant_species}</td>
+    <td>{props.plant.plant_species} ({props.value})</td>
     <td>{props.plant.seed_pot}</td>
     <td>{props.plant.sow_date}</td>
     <td>{props.plant.stepUp}</td>
@@ -24,22 +20,20 @@ var Plant = props => {
     <td><button onClick={() => props.deleteUser(props.plant._id)}>Remove</button></td>
     <td></td>
   </tr>
-)}
+)
 
 export default class PlantList extends Component {
   constructor(props) {
     super(props);
-      this.removePlant = this.removePlant.bind(this);
       this.onChangeSearch = this.onChangeSearch.bind(this);
       this.state = {
         plants: [],
-        search: 'Search',
-        repeat: 0
+        search: 'Search'
       };
   }
 
   componentDidMount() {
-    var serverLocation = Server + 'nursery/';
+    var serverLocation = Server + 'nursery/plants';
     axios.get(serverLocation)
       .then(res => {
         this.setState({ plants: res.data });
@@ -55,59 +49,72 @@ export default class PlantList extends Component {
     });
   }
 
+
+  // handleDelete= () => {
+  //   axios.post('http://localhost/trays/remove'+this.props.match.params.id)
+  //     .then(res => console.log(res.data));
+  // };
+
   plant_List() {
+    // how can i make this into components
     var lastPlant = {
       plant_species: '',
       seed_pot: '',
       sow_date: '',
       stepUp: '',
-      condition: '',
-      repeats: 0
+      repeat: 0,
+      condition: ''
     }
-    return this.state.plants.map(function(currentPlant) {
+    var initial = true;
+    return this.state.plants.map(function(currentPlant, plant) {
 
       var deleteUser = (thisPlant) => {
-        axios.delete(Server + 'nursery/remove/' + thisPlant)
+        axios.delete(Server + 'plants/remove/' + thisPlant)
           .then(console.log("Plant had be removed"))
           .catch(function (error){
             console.log(error);
           })
       }
+      var plus = lastPlant.repeat;
 
-      if (lastPlant.plant_species == currentPlant.plant_species &&
-          lastPlant.seed_pot === currentPlant.seed_pot &&
-          lastPlant.sow_date === currentPlant.sow_date &&
-          lastPlant.stepUp === currentPlant.stepUp &&
-          lastPlant.condition === currentPlant.condition) {
-            lastPlant = {
-              repeat: repeat + 1
 
-            }
-          }
 
-      lastPlant = {
-        plant_species: currentPlant.plant_species,
-        seed_pot: currentPlant.seed_pot,
-        sow_date: currentPlant.sow_date,
-        stepUp: currentPlant.stepUp,
-        condition: currentPlant.condition,
+      if(initial || lastPlant.plant_species === currentPlant.plant_species){
+        plus = plus + 1;
+        lastPlant = {
+          repeat: plus
+        }
+        initial = false;
+      }
+      else {
+        lastPlant = {
+          repeat: 0
+        }
+        initial = true;
+        // put return here ??
       }
 
+        lastPlant = {
+          plant_species: currentPlant.plant_species,
+          seed_pot: currentPlant.seed_pot,
+          sow_date: currentPlant.sow_date,
+          stepUp: currentPlant.stepUp,
+          condition: currentPlant.condition,
+          repeat: lastPlant.repeat
+        }
 
-
-
-      return <Plant deleteUser={deleteUser} plant={currentPlant} key={plant._id} />
+              return <Plant deleteUser={deleteUser} value={plus} plant={currentPlant} key={plant._id} />
     })
   }
 
   render() {
+    // make it so rerend after submit hit in create
     return (
 
       <Container>
       <Row>
-      <Col sm={8}>
+      <Col>
         <h3 >Plant List</h3>
-        <input type='text' value={this.state.search} onChange={this.onChangeSearch}/>
         <table className="table table-striped" style={{ marginTop: 20 }} >
           <thead>
             <tr>
@@ -125,9 +132,6 @@ export default class PlantList extends Component {
           </tbody>
         </table>
         <br/>
-      </Col>
-      <Col sm={4}>
-          <CreateTray/>
       </Col>
       </Row>
       </Container>

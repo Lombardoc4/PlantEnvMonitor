@@ -5,7 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 
 import Welcome from"./components/welcome.component";
-import PlantList from "./components/nursery-list.component";
+import Nursery from "./components/nursery-list.component";
+import PlantList from "./components/plant-list.component";
 import EditPlant from "./components/edit-plant.component";
 import EnvData from "./components/environment.component";
 
@@ -28,7 +29,7 @@ class App extends Component {
             <div className="collpase navbar-collapse" >
               <ul className="navbar-nav mr-auto">
               <li className="navbar-item">
-                <Link to="/plants" className="nav-link">Plants |</Link>
+                <Link to="/nursery/plants" className="nav-link">Plants |</Link>
               </li>
               <li className="navbar-item">
                 <Link to="/nursery" className="nav-link">Nursery |</Link>
@@ -40,7 +41,8 @@ class App extends Component {
             </div>
           </nav>
           <Route path="/" exact component={Welcome} />
-          <Route path="/nursery" component={PlantList} />
+          <Route path="/nursery" exact component={Nursery} />
+          <Route path="/nursery/plants" component={PlantList} />
           <Route path="/edit/:id" component={EditPlant} />
           <Route path="/monitor" component = {EnvData} />
         </div>

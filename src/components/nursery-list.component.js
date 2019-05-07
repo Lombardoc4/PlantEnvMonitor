@@ -62,6 +62,7 @@ export default class PlantList extends Component {
   // };
 
   plant_List() {
+    // how can i make this into components
     return this.state.plants.map(function(currentPlant, plant) {
 
       var deleteUser = (thisPlant) => {
@@ -76,11 +77,12 @@ export default class PlantList extends Component {
   }
 
   render() {
+    // make it so rerend after submit hit in create
     return (
 
       <Container>
       <Row>
-      <Col sm={8}>
+      <Col sm={9}>
         <h3 >Plant List</h3>
         <input type='text' value={this.state.search} onChange={this.onChangeSearch}/>
         <table className="table table-striped" style={{ marginTop: 20 }} >
@@ -101,7 +103,7 @@ export default class PlantList extends Component {
         </table>
         <br/>
       </Col>
-      <Col sm={4}>
+      <Col sm={3}>
           <CreateTray/>
       </Col>
       </Row>

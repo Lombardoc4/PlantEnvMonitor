@@ -92,7 +92,7 @@ export default class EditPlant extends Component {
       axios.post(serverLocation, newPlant)
         .then(res => console.log(res.data));
 
-      this.props.history.push('/');
+      this.props.history.push('/nursery');
     }
 
     render() {

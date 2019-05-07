@@ -33,7 +33,18 @@ app.listen(PORT, function() {
 
 
 plantRoutes.get('/', function(req, res) {
-    Plant.find(function(err, plants) {
+    Plant.find({}).sort({sow_date: 1}).exec(function(err, plants) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(plants);
+        }
+    });
+});
+
+plantRoutes.get('/plants', function(req, res) {
+
+    Plant.find({}).sort({plant_species: 1}).exec(function(err, plants) {
         if (err) {
             console.log(err);
         } else {
