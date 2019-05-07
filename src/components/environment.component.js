@@ -15,7 +15,7 @@ import {XYPlot,
       } from 'react-vis';
 
 
-const Server = "http://192.168.1.165:1337/";
+const Server = "http://10.17.84.23:1337/";
 
 export default class EnvData extends Component {
   constructor(props) {
