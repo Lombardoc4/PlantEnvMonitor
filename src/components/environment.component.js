@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
 
 
 import '../../node_modules/react-vis/dist/style.css';
 import {XYPlot,
         VerticalBarSeries,
+        HeatmapSeries,
         MarkSeries,
         LineSeries,
         VerticalGridLines,
@@ -38,21 +38,28 @@ export default class EnvData extends Component {
 
         const data = this.state.envis.map((envi)=> {
           var xTime = Date.parse(envi.time);
-          console.log(xTime);
+          // console.log(xTime);
           return {x: Date.parse(envi.time), y: envi.temperature}
         });
 
         return (
-            <div>
-            <XYPlot height={200} width={200}>
-              <VerticalBarSeries data={data} />
-            </XYPlot>
-            <XYPlot height={200} width={200}>
+            <div className="container">
+            <h1> Environment Temperature </h1><br/>
+            <XYPlot
+  width={600}
+  height={300}>
+  <XAxis />
+  <YAxis />
+  <HeatmapSeries
+    data={data}/>
+</XYPlot>
+
+            <XYPlot height={300} width={600} >
+            <XAxis />
+            <YAxis />
               <LineSeries data={data} />
             </XYPlot>
-            <XYPlot height={200} width={200}>
-              <MarkSeries data={data} />
-            </XYPlot>
+
 
             </div>
         )

@@ -2,70 +2,122 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
 
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
+
 import CreateTray from "./create-tray.component";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 const Server = "http://192.168.1.165:1337/";
 
-var Tray = props => (
+var Plant = props => {
+
+  (
   <tr>
-    <td>{props.tray.plant_species}</td>
-    <td>{props.tray.grams_of_seed}</td>
-    <td>{props.tray.germ_date}</td>
-    <td>{props.tray.light_date}</td>
-    <td>{props.tray.harvest_date}</td>
-    <td>{props.tray.yield}</td>
-    <td>{props.tray.plant_species}</td>
-    <td><Link to={"/edit/" + props.tray._id}>Edit</Link></td>
+    <td>{props.plant.plant_species}</td>
+    <td>{props.plant.seed_pot}</td>
+    <td>{props.plant.sow_date}</td>
+    <td>{props.plant.stepUp}</td>
+    <td>{props.plant.condition}</td>
+    <td><Link to={"/edit/" + props.plant._id}>Edit</Link></td>
+    <td><button onClick={() => props.deleteUser(props.plant._id)}>Remove</button></td>
     <td></td>
   </tr>
-)
+)}
 
 export default class PlantList extends Component {
   constructor(props) {
     super(props);
-      this.state = {trays: []};
+      this.removePlant = this.removePlant.bind(this);
+      this.onChangeSearch = this.onChangeSearch.bind(this);
+      this.state = {
+        plants: [],
+        search: 'Search',
+        repeat: 0
+      };
   }
 
   componentDidMount() {
-    var serverLocation = Server + 'trays/';
+    var serverLocation = Server + 'nursery/';
     axios.get(serverLocation)
       .then(res => {
-        this.setState({ trays: res.data });
+        this.setState({ plants: res.data });
       })
       .catch(function (error){
         console.log(error);
       });
   }
 
-  // handleDelete= () => {
-  //   axios.post('http://localhost/trays/remove'+this.props.match.params.id)
-  //     .then(res => console.log(res.data));
-  // };
+  onChangeSearch(e) {
+    this.setState({
+      search: e.target.value
+    });
+  }
 
   plant_List() {
-    return this.state.trays.map(function(currentTray, tray) {
-      return <Tray tray={currentTray} key={tray._id} />
+    var lastPlant = {
+      plant_species: '',
+      seed_pot: '',
+      sow_date: '',
+      stepUp: '',
+      condition: '',
+      repeats: 0
+    }
+    return this.state.plants.map(function(currentPlant) {
+
+      var deleteUser = (thisPlant) => {
+        axios.delete(Server + 'nursery/remove/' + thisPlant)
+          .then(console.log("Plant had be removed"))
+          .catch(function (error){
+            console.log(error);
+          })
+      }
+
+      if (lastPlant.plant_species == currentPlant.plant_species &&
+          lastPlant.seed_pot === currentPlant.seed_pot &&
+          lastPlant.sow_date === currentPlant.sow_date &&
+          lastPlant.stepUp === currentPlant.stepUp &&
+          lastPlant.condition === currentPlant.condition) {
+            lastPlant = {
+              repeat: repeat + 1
+
+            }
+          }
+
+      lastPlant = {
+        plant_species: currentPlant.plant_species,
+        seed_pot: currentPlant.seed_pot,
+        sow_date: currentPlant.sow_date,
+        stepUp: currentPlant.stepUp,
+        condition: currentPlant.condition,
+      }
+
+
+
+
+      return <Plant deleteUser={deleteUser} plant={currentPlant} key={plant._id} />
     })
   }
 
   render() {
     return (
-    <Router>
-      <div>
+
+      <Container>
+      <Row>
+      <Col sm={8}>
         <h3 >Plant List</h3>
-        <Link to="/create">New Tray</Link>
+        <input type='text' value={this.state.search} onChange={this.onChangeSearch}/>
         <table className="table table-striped" style={{ marginTop: 20 }} >
           <thead>
             <tr>
               <th>Plant Species</th>
-              <th>Grams of Seed</th>
-              <th>Germination Date</th>
-              <th>Light Date</th>
-              <th>Harvest Date</th>
-              <th>Yield</th>
+              <th>Seeds/Pot</th>
+              <th>Sowing date</th>
+              <th>Stepped Up</th>
+              <th>Condition</th>
               <th></th>
-              <th><button>Remove</button></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -73,9 +125,12 @@ export default class PlantList extends Component {
           </tbody>
         </table>
         <br/>
-        <Route path="/create" component = {CreateTray} />
-      </div>
-      </Router>
+      </Col>
+      <Col sm={4}>
+          <CreateTray/>
+      </Col>
+      </Row>
+      </Container>
     )
   }
 }

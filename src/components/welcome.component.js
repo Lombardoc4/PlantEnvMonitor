@@ -11,11 +11,11 @@ import header3 from "./welcomeResrc/header3.jpg"
 const Welcome = () => {
     return (
       <div>
-      <Carousel>
+      <Carousel >
     <Carousel.Item>
       <img
-        height='500'
-        className="d-block w-100"
+        height='600'
+        className="mx-auto d-flex w-80"
         src={header1}
         alt="First slide"
       />
@@ -26,8 +26,8 @@ const Welcome = () => {
     </Carousel.Item>
     <Carousel.Item>
       <img
-        height='500'
-        className="d-block w-100"
+        height='600'
+        className="mx-auto d-flex w-80"
         src={header2}
         alt="Third slide"
       />
@@ -39,8 +39,8 @@ const Welcome = () => {
     </Carousel.Item>
     <Carousel.Item>
       <img
-      height='500'
-      className="d-block w-100"
+      height='600'
+      className="mx-auto d-flex w-80"
       src={header3}
       alt="Third slide" />
 
@@ -51,7 +51,7 @@ const Welcome = () => {
     </Carousel.Item>
   </Carousel>
 
-  <div style={{paddingTop: 50}}>
+  <div className="container" style={{paddingTop: 50}}>
   <CardDeck>
   <Card>
     <Card.Img variant="top" src={header1} />

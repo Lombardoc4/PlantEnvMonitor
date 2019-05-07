@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 
-const Server = "http://192.168.1.12:1337/";
+const Server = "http://192.168.1.165:1337/";
 
 export default class EditPlant extends Component {
 
@@ -10,33 +10,33 @@ export default class EditPlant extends Component {
       super(props);
 
       this.onChangePlantSpecies = this.onChangePlantSpecies.bind(this);
-      this.onChangeGramsOfSeed = this.onChangeGramsOfSeed.bind(this);
-      this.onChangeGermDate = this.onChangeGermDate.bind(this);
-      this.onChangeLightDate = this.onChangeLightDate.bind(this);
-      this.onChangeHarvestDate = this.onChangeHarvestDate.bind(this);
-      this.onChangeYield = this.onChangeYield.bind(this);
+      this.onChangeSeedPot = this.onChangeSeedPot.bind(this);
+      this.onChangeSowDate = this.onChangeSowDate.bind(this);
+      this.onChangeStepUp = this.onChangeStepUp.bind(this);
+      this.onChangeSource = this.onChangeSource.bind(this);
+      this.onChangeCondition = this.onChangeCondition.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
           plant_species: '',
-          grams_of_seed: '',
-          germ_date: '',
-          light_date: '',
-          harvest_date: '',
-          yield: ''
+          seed_pot: '',
+          sow_date: '',
+          stepUp: '',
+          source: '',
+          condition: ''
         }
     }
     componentDidMount() {
-      var serverLocation = Server + 'trays/' + this.props.match.params.id;
+      var serverLocation = Server + 'nursery/' + this.props.match.params.id;
       axios.get(serverLocation)
       .then(res => {
         this.setState({
           plant_species: res.data.plant_species,
-          grams_of_seed: res.data.grams_of_seed,
-          germ_date: res.data.germ_date,
-          light_date: res.data.light_date,
-          harvest_date: res.data.harvest_date,
-          yield: res.data.yield
+          seed_pot: res.data.seed_pot,
+          sow_date: res.data.sow_date,
+          stepUp: res.data.stepUp,
+          source: res.data.source,
+          condition: res.data.condition
         })
       })
       .catch(function (error){
@@ -49,47 +49,47 @@ export default class EditPlant extends Component {
         plant_species: e.target.value
       });
     }
-    onChangeGramsOfSeed(e) {
+    onChangeSeedPot(e) {
       this.setState({
-        grams_of_seed: e.target.value
+        seed_pot: e.target.value
       });
     }
-    onChangeGermDate(e) {
+    onChangeSowDate(e) {
       this.setState({
-        germ_date: e.target.value
-        });
-    }
-    onChangeLightDate(e) {
-      this.setState({
-        light_date: e.target.value
+        sow_date: e.target.value
       });
     }
-    onChangeHarvestDate(e) {
+    onChangeStepUp(e) {
       this.setState({
-        harvest_date: e.target.value
+        stepUp: e.target.value
       });
     }
-    onChangeYield(e) {
+    onChangeSource(e) {
       this.setState({
-        yield: e.target.value
+        source: e.target.value
+      });
+    }
+    onChangeCondition(e) {
+      this.setState({
+        condition: e.target.value
       });
     }
 
     onSubmit(e) {
       e.preventDefault();
 
-      var newTray = {
+      var newPlant = {
         plant_species: this.state.plant_species,
-        grams_of_seed: this.state.grams_of_seed,
-        germ_date: this.state.germ_date,
-        light_date: this.state.light_date,
-        harvest_date: this.state.harvest_date,
-        yield: this.state.yield
+        seed_pot: this.state.seed_pot,
+        sow_date: this.state.sow_date,
+        stepUp: this.state.stepUp,
+        source: this.state.source,
+        condition: this.state.condition
       };
-      console.log(newTray);
+      console.log(newPlant);
 
-      var serverLocation = Server + 'trays/update'+this.props.match.params.id;
-      axios.post(serverLocation, newTray)
+      var serverLocation = Server + 'nursery/update'+this.props.match.params.id;
+      axios.post(serverLocation, newPlant)
         .then(res => console.log(res.data));
 
       this.props.history.push('/');
@@ -97,7 +97,7 @@ export default class EditPlant extends Component {
 
     render() {
       return (
-        <div style={{marginTop: 10}}>
+        <div className="container" style={{marginTop: 10}}>
           <h3>Update Tray Info</h3>
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
@@ -108,45 +108,47 @@ export default class EditPlant extends Component {
                       onChange={this.onChangePlantSpecies}
                       />
             </div>
+
             <div className="form-group">
-              <label>Grams Of Seed: </label>
+              <label>Seeds per Pot: </label>
               <input  type="number"
                       className="form-control"
-                      value={this.state.grams_of_seed}
-                      onChange={this.onChangeGramsOfSeed}
+                      value={this.state.seed_pot}
+                      onChange={this.onChangeSeedPot}
                       />
             </div>
             <div className="form-group">
-              <label>Germination Date (MM/DD/YY): </label>
+              <label>Sow Date (MM/DD/YY): </label>
               <input  type="string"
                       className="form-control"
-                      value={this.state.germ_date}
-                      onChange={this.onChangeGermDate}
+                      value={this.state.sow_date}
+                      onChange={this.onChangeSowDate}
                       />
             </div>
             <div className="form-group">
-              <label>Light Date (MM/DD/YY): </label>
+              <label>Step Up (MM/DD/YY): </label>
               <input  type="string"
                       className="form-control"
-                      value={this.state.light_date}
-                      onChange={this.onChangeLightDate}
+                      value={this.state.stepUp}
+                      onChange={this.onChangeStepUp}
                       />
             </div>
             <div className="form-group">
-              <label>Harvest Date (MM/DD/YY): </label>
+              <label>Seed Source: </label>
               <input  type="string"
                       className="form-control"
-                      value={this.state.harvest_date}
-                      onChange={this.onChangeHarvestDate}
+                      value={this.state.source}
+                      onChange={this.onChangeSource}
                       />
             </div>
             <div className="form-group">
-              <label>Yield (in Oz): </label>
-              <input  type="number"
-                      className="form-control"
-                      value={this.state.yield}
-                      onChange={this.onChangeYield}
-                      />
+              <label>Condition: </label>
+              <select value={this.state.condition}
+                    onChange={this.onChangeCondition}>
+                <option value="Happy">Happy</option>
+                <option value="Moderate">Slow</option>
+                <option value="Sad">Sad</option>
+              </select>
             </div>
 
             <div className="form-group">

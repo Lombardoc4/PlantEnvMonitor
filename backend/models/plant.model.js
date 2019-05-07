@@ -1,25 +1,27 @@
+
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-let Tray = new Schema({
+let Plant = new Schema({
   plant_species: {
     type: String
   },
-  grams_of_seed: {
+  seed_pot: {
     type: Number
   },
-  germ_date: {
+  sow_date: {
     type: String
   },
-  light_date: {
+  source: {
     type: String
   },
-  harvest_date: {
+  stepUp: {
     type: String
   },
-  yield:{
-    type: Number
+  condition:{
+    type: String
   }
 });
 
-module.exports = mongoose.model('Tray', Tray);
+module.exports = mongoose.model('Plant', Plant);

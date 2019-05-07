@@ -7,12 +7,11 @@ var helmet = require('helmet');
 var morgan = require('morgan');
 
 var PORT = 1337;
-var testLogin = [];
 
-var trayRoutes = express.Router();
+var plantRoutes = express.Router();
 var enviRoutes = express.Router();
 
-let Tray = require('./models/tray.model');
+let Plant = require('./models/plant.model');
 let Enviro = require('./models/env.model');
 
 app.use(cors());
@@ -33,68 +32,65 @@ app.listen(PORT, function() {
 });
 
 
-trayRoutes.get('/', function(req, res) {
-    Tray.find(function(err, trays) {
+plantRoutes.get('/', function(req, res) {
+    Plant.find(function(err, plants) {
         if (err) {
             console.log(err);
         } else {
-            res.json(trays);
+            res.json(plants);
         }
     });
 });
 
-trayRoutes.get('/:id', function(req, res) {
+plantRoutes.get('/:id', function(req, res) {
     let id = req.params.id;
-    Tray.findById(id, function(err, tray) {
+    Plant.findById(id, function(err, plant) {
       if (err) {
         console.log(err);
       } else {
-        res.json(tray);
+        res.json(plant);
       }
     });
 });
 
-trayRoutes.post('/add', function(req, res) {
-    let tray = new Tray(req.body);
-    tray.save()
-      .then(tray => {
-        res.status(200).json({'tray': 'tray added successfully'});
+plantRoutes.post('/add', function(req, res) {
+    let plant = new Plant(req.body);
+    plant.save()
+      .then(plant => {
+        res.status(200).send('plant added successfully');
       })
       .catch(err => {
         res.status(400).send('adding new tray failed');
       });
 });
 
-trayRoutes.delete('/remove/:id', function(req, res) {
-  Tray.findById(req.params.id, function(err, tray) {
+plantRoutes.delete('/remove/:id', function(req, res) {
+  Plant.findById(req.params.id, function(err, plant) {
     if (err) {
-      res.status(404).send("Tray not found");
+      res.status(404).send("Plant not found");
     }
     else {
-      tray.remove().then(tray => {
-          res.json('tray removed');
-          res.redirect('/');
-        })
+      plant.remove().then()
     }
     // res.flash("success", "Tray has been deleted.")
     // return res.redirect("/");
   });
 });
 
-trayRoutes.post('/update/:id', function(req, res) {
-    Tray.findById(req.params.id, function(err, tray) {
-      if (!tray)
-        res.status(404).send("tray is not found");
+plantRoutes.post('/update/:id', function(req, res) {
+    Plant.findById(req.params.id, function(err, plant) {
+      if (!plant)
+        res.status(404).send("Plant is not found");
       else
-        tray.plant_species = req.body.plant_species;
-        tray.grams_of_seed = req.body.grams_of_seed;
-        tray.germ_date = req.body.germ_date;
-        tray.light_date = req.body.light_date;
-        tray.harvest_date = req.body.harvest_date;
-        tray.yield = req.body.yield;
+        plant.plant_species = req.body.plant_species;
+        plant.seed_pot = req.body.seed_pot;
+        plant.sow_date = req.body.sow_date;
+        plant.source = req.body.source;
+        plant.stepUp = req.body.stepUp;
+        plant.condition = req.body.condition;
 
-        tray.save().then(tray => {
-          res.json('Tray updated!');
+        plant.save().then(plant => {
+          res.json('Planting updated!');
         })
           .catch(err => {
             res.status(400).send("Update not possible right now");
@@ -102,7 +98,7 @@ trayRoutes.post('/update/:id', function(req, res) {
     });
 });
 
-app.use('/trays', trayRoutes);
+app.use('/nursery', plantRoutes);
 
 enviRoutes.get('/', function(req, res) {
   Enviro.find(function(err, envis) {
