@@ -15,7 +15,7 @@ const Welcome = () => {
     <Carousel.Item>
       <img
         height='600'
-        className="mx-auto d-flex w-80"
+        className="d-flex w-100"
         src={header1}
         alt="First slide"
       />
@@ -27,7 +27,7 @@ const Welcome = () => {
     <Carousel.Item>
       <img
         height='600'
-        className="mx-auto d-flex w-80"
+        className="d-block w-100"
         src={header2}
         alt="Third slide"
       />
@@ -40,7 +40,7 @@ const Welcome = () => {
     <Carousel.Item>
       <img
       height='600'
-      className="mx-auto d-flex w-80"
+      className="mx-auto d-flex w-100"
       src={header3}
       alt="Third slide" />
 

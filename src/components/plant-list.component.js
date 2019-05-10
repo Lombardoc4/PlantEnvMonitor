@@ -65,35 +65,13 @@ export default class PlantList extends Component {
       repeat: 0,
       condition: ''
     }
+    var listLength = this.state.plants.length;
+    var i = 1;
     var initial = true;
+
     return this.state.plants.map(function(currentPlant, plant) {
 
-      var deleteUser = (thisPlant) => {
-        axios.delete(Server + 'plants/remove/' + thisPlant)
-          .then(console.log("Plant had be removed"))
-          .catch(function (error){
-            console.log(error);
-          })
-      }
-      var plus = lastPlant.repeat;
-
-
-
-      if(initial || lastPlant.plant_species === currentPlant.plant_species){
-        plus = plus + 1;
-        lastPlant = {
-          repeat: plus
-        }
-        initial = false;
-      }
-      else {
-        lastPlant = {
-          repeat: 0
-        }
-        initial = true;
-        // put return here ??
-      }
-
+      if (initial) {
         lastPlant = {
           plant_species: currentPlant.plant_species,
           seed_pot: currentPlant.seed_pot,
@@ -103,7 +81,65 @@ export default class PlantList extends Component {
           repeat: lastPlant.repeat
         }
 
-              return <Plant deleteUser={deleteUser} value={plus} plant={currentPlant} key={plant._id} />
+      }
+
+      var deleteUser = (thisPlant) => {
+        axios.delete(Server + 'plants/remove/' + thisPlant)
+          .then(console.log("Plant had be removed"))
+          .catch(function (error){
+            console.log(error);
+          })
+      }
+
+      var plus = lastPlant.repeat;
+
+
+      if(initial || i < listLength && lastPlant.plant_species === currentPlant.plant_species){
+        console.log(initial);
+initial = false;
+        console.log(lastPlant.plant_species);
+        console.log(currentPlant.plant_species);
+
+        plus = plus + 1;
+        lastPlant = {
+          repeat: plus
+        }
+        i = i + 1;
+        lastPlant = {
+          plant_species: currentPlant.plant_species,
+          seed_pot: currentPlant.seed_pot,
+          sow_date: currentPlant.sow_date,
+          stepUp: currentPlant.stepUp,
+          condition: currentPlant.condition,
+          repeat: lastPlant.repeat
+        }
+        return null;
+      }
+            //
+            // if(i < listLength){
+            //
+            //   plus = plus + 1;
+            //   lastPlant = {
+            //     repeat: plus
+            //   }
+            //   i = i + 1;
+
+            //   return
+            // }
+
+      else {
+        lastPlant = {
+          plant_species: lastPlant.plant_species,
+          seed_pot: lastPlant.seed_pot,
+          sow_date: lastPlant.sow_date,
+          stepUp: lastPlant.stepUp,
+          condition: lastPlant.condition,
+          repeat: 0
+        }
+        i = i + 1;
+
+          return <Plant deleteUser={deleteUser} value ={plus} plant={lastPlant} key={plant._id} />
+      }
     })
   }
 
