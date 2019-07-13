@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 
-const Server = "http://192.168.1.165:1337/";
+const Server = "http://localhost:1337/";
 
 export default class CreateTray extends Component {
   constructor(props) {

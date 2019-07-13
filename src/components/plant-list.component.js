@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
 
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Container from 'react-bootstrap/Container';
 
 
-const Server = "http://192.168.1.165:1337/";
+const Server = "http://localhost:1337/";
 
 var Plant = props => (
   <tr>
@@ -147,9 +144,7 @@ initial = false;
     // make it so rerend after submit hit in create
     return (
 
-      <Container>
-      <Row>
-      <Col>
+      <div>
         <h3 >Plant List</h3>
         <table className="table table-striped" style={{ marginTop: 20 }} >
           <thead>
@@ -168,9 +163,7 @@ initial = false;
           </tbody>
         </table>
         <br/>
-      </Col>
-      </Row>
-      </Container>
+        </div>
     )
   }
 }

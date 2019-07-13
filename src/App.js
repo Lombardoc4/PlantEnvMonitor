@@ -26,19 +26,24 @@ class App extends Component {
             </Link>
             </a>
             <Link to="/" className="navbar-brand">Plant Environment Monitor</Link>
+
             <div className="collpase navbar-collapse" >
               <ul className="navbar-nav mr-auto">
               <li className="navbar-item">
-                <Link to="/nursery/plants" className="nav-link">Plants |</Link>
+                <Link to="/nursery/plants" className="nav-link">Plants</Link>
               </li>
               <li className="navbar-item">
-                <Link to="/nursery" className="nav-link">Nursery |</Link>
+                <Link to="/nursery" className="nav-link">Nursery</Link>
               </li>
                 <li className="navbar-item">
                   <Link to="/monitor" className="nav-link">Environment</Link>
                 </li>
               </ul>
+
+              <button type="button" class="btn btn-success btn-lg mx-1">Sign In</button>
+              <button type="button" class="btn btn-primary btn-lg mx-1" >Sign Up</button>
             </div>
+
           </nav>
           <Route path="/" exact component={Welcome} />
           <Route path="/nursery" exact component={Nursery} />

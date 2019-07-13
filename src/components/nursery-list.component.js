@@ -9,7 +9,7 @@ import Container from 'react-bootstrap/Container';
 import CreateTray from "./create-tray.component";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
-const Server = "http://192.168.1.165:1337/";
+const Server = "http://localhost:1337/";
 
 var Plant = props => (
   <tr>
