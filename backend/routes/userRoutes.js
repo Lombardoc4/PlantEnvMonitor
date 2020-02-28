@@ -1,7 +1,7 @@
 var express = require('express')
 var userRoutes = express.Router();
 
-let User = require('./models/users.model');
+let User = require('../models/users.model');
 
 userRoutes.post('/add', function(req, res) {
     let user = new User(req.body);

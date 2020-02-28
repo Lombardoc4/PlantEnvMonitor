@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 
 import header1 from "./welcomeResrc/header1.jpg"
 import header2 from "./welcomeResrc/header2.JPG"
-import header3 from "./welcomeResrc/header3.jpg"
+// import header3 from "./welcomeResrc/header3.jpg"
 
 const Welcome = () => {
     return (
@@ -38,11 +38,11 @@ const Welcome = () => {
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>
-      <img
+      {/* <img
       height='600'
       className="mx-auto d-flex w-100"
       src={header3}
-      alt="Third slide" />
+      alt="Third slide" /> */}
 
       <Carousel.Caption>
         <h3>Third slide label</h3>
@@ -80,7 +80,7 @@ const Welcome = () => {
     </Card.Footer>
   </Card>
   <Card>
-    <Card.Img variant="top" src={header3} />
+    {/* <Card.Img variant="top" src={header3} /> */}
     <Card.Body>
       <Card.Title>Our Team</Card.Title>
       <Card.Text>

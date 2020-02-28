@@ -14,12 +14,15 @@ import logo from "./logo.JPG";
 
 
 class App extends Component {
+
+
   render() {
 
     return (
       <Router>
         <div >
-          <nav className="navbar navbar-expand-xl navbar-light bg-transparent" style={{fontSize: '25px'}}>
+
+          <nav className="navbar navbar-expand-md navbar-light bg-transparent" style={{fontSize: '20px'}}>
             <a className="navbar-brand" target="_blank">
             <Link to="/">
               <img src={logo} width="30" height="30" alt="/" />
@@ -43,8 +46,8 @@ class App extends Component {
               <button type="button" class="btn btn-success btn-lg mx-1">Sign In</button>
               <button type="button" class="btn btn-primary btn-lg mx-1" >Sign Up</button>
             </div>
-
           </nav>
+
           <Route path="/" exact component={Welcome} />
           <Route path="/nursery" exact component={Nursery} />
           <Route path="/nursery/plants" component={PlantList} />

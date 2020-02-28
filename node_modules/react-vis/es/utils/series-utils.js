@@ -132,6 +132,7 @@ export function getStackedData(children, attr) {
       accumulator.push(null);
       return accumulator;
     }
+    var seriesType = series.type.displayName;
 
     var _series$props = series.props,
         data = _series$props.data,
@@ -155,13 +156,16 @@ export function getStackedData(children, attr) {
       if (!latestAttrPositions[cluster]) {
         latestAttrPositions[cluster] = {};
       }
+      if (!latestAttrPositions[cluster][seriesType]) {
+        latestAttrPositions[cluster][seriesType] = {};
+      }
 
-      var prevD = latestAttrPositions[cluster][d[baseAttr]];
+      var prevD = latestAttrPositions[cluster][seriesType][d[baseAttr]];
       // It is the first segment of a bar.
       if (!prevD) {
         var _latestAttrPositions$;
 
-        latestAttrPositions[cluster][d[baseAttr]] = (_latestAttrPositions$ = {}, _defineProperty(_latestAttrPositions$, attr0, d[attr0]), _defineProperty(_latestAttrPositions$, attr, d[attr]), _latestAttrPositions$);
+        latestAttrPositions[cluster][seriesType][d[baseAttr]] = (_latestAttrPositions$ = {}, _defineProperty(_latestAttrPositions$, attr0, d[attr0]), _defineProperty(_latestAttrPositions$, attr, d[attr]), _latestAttrPositions$);
 
         return _extends({}, d);
       }
@@ -169,7 +173,7 @@ export function getStackedData(children, attr) {
       // Calculate the position of the next segment in a bar.
       var nextD = _extends({}, d, (_extends2 = {}, _defineProperty(_extends2, attr0, prevD[attr]), _defineProperty(_extends2, attr, prevD[attr] + d[attr] - (d[attr0] || 0)), _extends2));
 
-      latestAttrPositions[cluster][d[baseAttr]] = (_latestAttrPositions$2 = {}, _defineProperty(_latestAttrPositions$2, attr0, nextD[attr0]), _defineProperty(_latestAttrPositions$2, attr, nextD[attr]), _latestAttrPositions$2);
+      latestAttrPositions[cluster][seriesType][d[baseAttr]] = (_latestAttrPositions$2 = {}, _defineProperty(_latestAttrPositions$2, attr0, nextD[attr0]), _defineProperty(_latestAttrPositions$2, attr, nextD[attr]), _latestAttrPositions$2);
 
       return nextD;
     }));
