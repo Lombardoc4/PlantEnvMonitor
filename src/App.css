@@ -31,3 +31,22 @@
     transform: rotate(360deg);
   }
 }
+
+.userEntryModal{
+  width: 250px;
+  height: 350px;
+  z-index: 1;
+  background-color: white;
+  position: absolute;
+  border: 1px solid;
+  border-radius: 20px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.userEntryModal.on{
+  display: block;
+}
+

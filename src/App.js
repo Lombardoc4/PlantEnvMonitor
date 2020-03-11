@@ -9,20 +9,43 @@ import Nursery from "./components/nursery-list.component";
 import PlantList from "./components/plant-list.component";
 import EditPlant from "./components/edit-plant.component";
 import EnvData from "./components/environment.component";
+import ClientButton from "./components/clientButton";
+import EntryModal from './components/entryModal.component';
+
 
 import logo from "./logo.JPG";
+import "./App.css"
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+      this.displayEntry = this.displayEntry.bind(this);
+      this.state = {
+        userEntryDisplay: 'none',
+      };
+  }
+
+  displayEntry = (entry, evt) => {
+      evt.preventDefault();
+      this.setState({
+        userEntryDisplay: entry,
+      });
+  }
 
 
   render() {
+    let userEntryClass = "userEntryModal";
+    if (this.state.userEntryDisplay !== "none" ){
+      userEntryClass += " on"; 
+    }
+
 
     return (
       <Router>
         <div >
 
-          <nav className="navbar navbar-expand-md navbar-light bg-transparent" style={{fontSize: '20px'}}>
+          <nav className="sticky-top navbar navbar-expand-md navbar-light bg-transparent" style={{fontSize: '20px'}}>
             <a className="navbar-brand" target="_blank">
             <Link to="/">
               <img src={logo} width="30" height="30" alt="/" />
@@ -42,17 +65,20 @@ class App extends Component {
                   <Link to="/monitor" className="nav-link">Environment</Link>
                 </li>
               </ul>
-
-              <button type="button" class="btn btn-success btn-lg mx-1">Sign In</button>
-              <button type="button" class="btn btn-primary btn-lg mx-1" >Sign Up</button>
+              <ClientButton showModal={this.displayEntry}/>
             </div>
           </nav>
 
+          <div className = {userEntryClass}>
+            {<EntryModal closeModal={this.displayEntry} entry={this.state.userEntryDisplay}/> }
+          </div>
+          
           <Route path="/" exact component={Welcome} />
           <Route path="/nursery" exact component={Nursery} />
           <Route path="/nursery/plants" component={PlantList} />
           <Route path="/edit/:id" component={EditPlant} />
           <Route path="/monitor" component = {EnvData} />
+
         </div>
       </Router>
     );

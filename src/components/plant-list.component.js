@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const Server = "http://localhost:1337/";
 
-var Plant = props => (
+const Plant = props => (
   <tr>
     <td>{props.plant.plant_species} ({props.value})</td>
     <td>{props.plant.seed_pot}</td>

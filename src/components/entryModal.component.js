@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import logo from "../logo.JPG";
+
+import './login.css'
+
 const Server = "http://localhost:1337/";
 
-export default class Login extends Component {
+const entryModal = (props) => {
+  let entryMode
+  const header = props.entry;
+  header.replace(/Sign/, 'Sign ');
 
-  render() {
-    return (
-      <div style={{marginTop: 10}}>
-        <h3>New Planting</h3>
-        <form onSubmit={this.onSubmit}>
+  if (props.entry === "SignIn")
+    entryMode = <SignIn/>
+    if (props.entry === "SignUp")
+    entryMode = <SignUp/>
+
+  return (
+    <div class="loginModal">
+      <button class="btn btn-danger" onClick={(e) => props.closeModal("none", e)}>Close Button</button>
+      <h3>{header}</h3>
+      {entryMode}
+        {/* <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Plant Species: </label>
             <input  type="text"
@@ -71,8 +84,35 @@ export default class Login extends Component {
           <div className="form-group">
             <input type="submit" value="Create Planting" className="btn btn-primary" />
           </div>
-        </form>
-      </div>
-    )
-  }
+        </form> */}
+    </div>
+  )
 }
+
+const SignIn = () => {
+  return (
+    <div>
+      <img class="signInLogo" src={logo}/>
+      <form>
+        <input placeholder="Username" type="text"/>
+        <input placeholder="Password" type="password"/>
+        <input class="btn btn-success" type="submit"/>
+      </form>
+    </div>
+  )
+}
+
+const SignUp = () => {
+  return (
+    <div>
+      <form>
+        <input placeholder="Username" type="text"/>
+        <input placeholder="Password" type="password"/>
+        <input placeholder="Email" type="password"/>
+        <input class="btn btn-success" type="submit"/>
+      </form>
+    </div>
+  )
+}
+
+export default entryModal
