@@ -1,26 +1,27 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var cors = require('cors');
-var mongoose = require('mongoose');
-var helmet = require('helmet');
-var morgan = require('morgan');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const helmet = require('helmet');
+const morgan = require('morgan');
 
 app.use(cors());
 app.use(helmet());
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 
-var PORT = 1337;
-var plantRoutes = require('./routes/plantRoutes');
-var userRoutes = require('./routes/userRoutes');
-var enviRoutes = express.Router();
+const PORT = 1337;
+const plantRoutes = require('./routes/nurseryRoutes');
+const userRoutes = require('./routes/userRoutes');
+const enviRoutes = express.Router();
 
 let Enviro = require('./models/env.model');
 
-mongoose.connect('mongodb://Farmer1:farmer1@ds161335.mlab.com:61335/p-e-m', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://scrubboi:'+ process.env.MONGO + '@testtestest-236by.mongodb.net/PlantMonitor?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true });
 
-var connection = mongoose.connection;
+const connection = mongoose.connection;
+connection.collection('seeds');
 connection.once('open', function(){
   console.log("MongoDB database connection established, success!");
 });
@@ -29,6 +30,14 @@ connection.once('open', function(){
 app.listen(PORT, function() {
   console.log("Server in year: " + PORT);
 });
+
+// entry_type: "seed"
+// plant_name: {common_name: "Aquilegia canadensis", scientific_name: "Eastern Columbine"}
+// plant_type: "Wildflower"
+// source: "Paramus PT"
+// obtain_date: {type: "2019-08-01", default: ƒ}
+// seed_quantity: "10"
+// picture_source: undefined
 
 app.use('/nursery', plantRoutes);
 app.use('/users', userRoutes);

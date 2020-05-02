@@ -4,12 +4,12 @@ import axios from 'axios';
 
 import '../../node_modules/react-vis/dist/style.css';
 import {XYPlot,
-        VerticalBarSeries,
+        // VerticalBarSeries,
         HeatmapSeries,
-        MarkSeries,
+        // MarkSeries,
         LineSeries,
-        VerticalGridLines,
-        HorizontalGridLines,
+        // VerticalGridLines,
+        // HorizontalGridLines,
         YAxis,
         XAxis
       } from 'react-vis';
@@ -37,7 +37,7 @@ export default class EnvData extends Component {
     render() {
 
         const data = this.state.envis.map((envi)=> {
-          var xTime = Date.parse(envi.time);
+          // var xTime = Date.parse(envi.time);
           // console.log(xTime);
           return {x: Date.parse(envi.time), y: envi.temperature}
         });

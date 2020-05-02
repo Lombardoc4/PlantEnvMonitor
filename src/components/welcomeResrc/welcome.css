@@ -6,15 +6,11 @@
 .container2 {
   top: 25px,
 }
-.parallax{
-  background-image: url("./header1.png");
-
-  /* Set a specific height */
+.headerImg{
+  width: auto;
   height: 500px;
-
-  /* Create the parallax scrolling effect */
-  background-attachment: fixed;
+  background-image: url("./header.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
 }

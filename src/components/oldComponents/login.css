@@ -1,0 +1,28 @@
+.loginModal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.signInLogo{
+    width: 100px;
+    height: 100px;
+}
+
+form{
+    /* text-align: left; */
+    padding: 10px;
+}
+
+input{
+    font-size: 16px;
+    margin-top: 10px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+input:focus{
+    outline: none;
+}
