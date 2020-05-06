@@ -16,6 +16,12 @@ const Server = "http://localhost:1337/";
 
 function Header() {
     let { path, url } = useRouteMatch();
+
+    // TODO: TEMPORARY
+    path = url = "/nursery";
+    console.log(path);
+
+
     const local = useLocation();
     const [currWindow, setWindow] = useState({
         height: window.innerHeight,
@@ -46,7 +52,7 @@ function Header() {
     let seedBorderBottom =  location.includes(['seeds']) ? {...buttonActiveStyle} : {...buttonStyle};
     let noteBorderBottom =  location.includes(['notes']) ? {...buttonActiveStyle} : {...buttonStyle};
 
-    const containerHeight = (currWindow.height - 60) + 'px';
+    const containerHeight = currWindow.height + 'px';
 
     return(
         <Container className="p-4 bg-white" style={{color: 'rgb(104, 86, 52)', minHeight: containerHeight, height: '100%'}}>
@@ -291,6 +297,8 @@ function Notes() {
         {'_id':'7777777', 'Date': '3/12/18', 'Title': 'General', 'General': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu odio risus. Sed eget sagittis sapien. Aliquam orci ex, elementum.', 'Source': 'sdfsdfds', 'Quantity': 'jghj', 'PlantType': 'jweretrghg'},
         {'_id':'8888888', 'Date': '3/2/11', 'Title': 'Plant Condition', 'General': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu odio risus. Sed eget sagittis sapien. Aliquam orci ex, elementum.', 'Source': 'hjghjgjg', 'Quantity': 'jhgjhg', 'PlantType': 'jhjg'},
     ];
+
+
 
     return(
         <NoteBody data={dataSample} omits={omitList}/>

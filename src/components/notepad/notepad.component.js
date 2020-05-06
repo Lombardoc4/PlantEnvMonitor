@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { Link,  useRouteMatch } from "react-router-dom";
 import axios from 'axios';
 
@@ -12,9 +12,9 @@ const NoteBody = props => {
 
     let {  url } = useRouteMatch();
 
-    const contentPreview = props.item.General.slice(0, 105) + "...";
+    const contentPreview = props.item.copy.slice(0, 105) + "...";
 
-    const NoteHeader = <div><span>{props.item.Title}</span><span className="float-right">{props.item.Date}</span></div>
+    const NoteHeader = <div><span>{props.item.header}</span><span className="float-right">{props.item.date}</span></div>
     const NoteContent = <div>{contentPreview}</div>
     let viewUrl = `${url}/view/` + props.item._id;
 
@@ -28,11 +28,45 @@ const NoteBody = props => {
                 </div>
             </Link>
         </Col>
-
     )
 }
 
 const CreateNote  = (props) => {
+    const [note, writeNote] = useState(
+        {
+            subject: '',
+            copy: '',
+        }
+    );
+
+    const handleChange = evt => {
+        let newValue = {};
+        newValue[evt.target.name] = evt.target.value;
+        for (let [name, value] of Object.entries(note)){
+            if (evt.target.name === name) {
+              newValue[name] = evt.target.value;
+            } else {
+              newValue[name] = value;
+            }
+        }
+        writeNote(newValue);
+    }
+
+    const confirmSubmit = () => {
+        console.log('submitted');
+        props.toggleModal();
+        props.getData();
+    }
+
+    const submitNote = evt => {
+        evt.preventDefault();
+
+        var serverLocation = Server + "nursery/notes";
+        axios.post(serverLocation, note)
+            .then(confirmSubmit)
+            .catch(err => console.log(err));
+
+    }
 
 
     return (
@@ -51,9 +85,9 @@ const CreateNote  = (props) => {
                         Dont even seperate the contents just lump all notes by date ---- DO THIS FIRST
                     */}
                     <h3>New Note</h3>
-                    <textarea autoFocus rows="1" cols="50" placeholder='Enter subject...'/>
-                    <textarea autoFocus rows="8" cols="50" placeholder='Enter note...'/>
-                    <button>Submit</button>
+                    <input name="subject" onChange={handleChange} style={{width: '100%'}} type='text' autoFocus placeholder='Enter subject...'/>
+                    <textarea name="copy" onChange={handleChange} style={{resize: 'none', width: '100%'}} rows="8" placeholder='Enter note...'/>
+                    <button onClick={submitNote}>Submit</button>
                 </form>
             </div>
         </div>
@@ -67,37 +101,39 @@ const NotePreview = props => {
         modal: false
     });
 
-    useEffect(() => {
-        const getData = () => {
-            let serverLocation = Server + 'nursery/notes';
+    const getData = useCallback(() => {
+        let serverLocation = Server + 'nursery/notes';
 
-            axios.get(serverLocation)
-            .then(res => {
-                if (res.data.length > 0){
-                    console.log(res.data)
-                    setData({
-                        data: res.data
-                    })
-                }
-            })
-            .catch(function (error){
-                console.log(error);
-            });
-        }
+        axios.get(serverLocation)
+        .then(res => {
+            if (res.data.length > 0){
+                console.log(res.data)
+                setData({
+                    data: res.data
+                })
+            }
+        })
+        .catch(function (error){
+            console.log(error);
+        });
+    }, [notes.length])
+
+    useEffect(() => {
         getData();
-    }, [notes])
+    }, [getData])
 
     const toggleModal = () => {
-        setData({modal: !notes.modal});
+        setData({...notes, modal: !notes.modal});
     }
 
     const omitList =  (Array.isArray(props.omits) && props.omits.length) ? props.omits : ["_id", '__v'];
 
     let allData;
     if (notes.data){
+        console.log(notes.data);
         allData = notes.data.map(function(dataSet, index) {
             return (
-            <NoteBody item={dataSet} omit={omitList} key={index} />
+            <NoteBody item={dataSet} getData={getData} omit={omitList} key={index} />
             )
         });
     }

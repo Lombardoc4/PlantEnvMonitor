@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import Welcome from"./components/welcome.component";
 import NavBar from "./components/navBar.component";
@@ -19,16 +19,18 @@ const App = () => (
   <Router>
     <div>
       <header className="bg-white sticky-top">
-        <NavBar />
+        {/* <NavBar /> */}
+        <Nursery />
       </header>
       <Switch>
-        <Route path="/" exact component={Welcome} />
+        <Redirect from="/" to="/nursery" />
+        {/* <Route path="/" exact component={Welcome} /> */}
         <Route path="/nursery" component={Nursery} />
-        <Route path="/supplies" component={Supplies} />
+        {/* <Route path="/supplies" component={Supplies} /> */}
         {/* <Route path="/nursery/germination" >
         <h1> Testing testing 123</h1>
         </Route> */}
-        <Route path="/monitor" component = {EnvData} />
+        {/* <Route path="/monitor" component = {EnvData} /> */}
       </Switch>
     </div>
   </Router>

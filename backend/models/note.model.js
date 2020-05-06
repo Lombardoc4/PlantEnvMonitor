@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 let Note = new Schema(
   {
-    'Entry Date': Date,
-    'Entry Headers': Array,
-    'Entry Contents': Array,
+    'date': {type: Date, default: Date.now},
+    'subject': Array,
+    'copy': Array,
   },
   { collection: 'notes'}
 );
